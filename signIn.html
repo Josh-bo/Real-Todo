@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In Page</title>
+    <link rel="stylesheet" href="bootstrap-5.2.2-dist/css/bootstrap.css">
+</head>
+<body onload="display()">
+   <div class="container">
+       <div class="text-center mt-5 row">
+            <div id="disp"></div>
+            <div class="col-12 te border w-50 mx-auto pb-2">
+                <h1>TODO PRO MAX</h1>
+                <h2>LOG IN</h2>
+
+                <div id="error"></div>
+
+                <input type="text" placeholder=" E-mail" id="signInEm" class="form-control my-2">
+
+                <input type="password" placeholder=" Password" id="signInPs" class="form-control my-2">
+
+                <button class="btn btn-danger my-3" onclick="back()">Previous</button>
+
+                <button class="btn btn-success my-3" onclick="signIn()">LOG IN</button>
+            </div>
+        </div>
+   </div>
+
+   <script>
+       var everyDetails = JSON.parse(localStorage.getItem('allUsersData'))
+       console.log(everyDetails) 
+
+       function signIn(){
+        //    alert("Hi")
+
+           var userEmail = signInEm.value;
+           var userPass = signInPs.value;
+           var found = false
+
+           for (let index = 0; index < everyDetails.length; index++) {
+               if(everyDetails[index].email === userEmail && everyDetails[index].password == userPass){
+                   found = true
+                   localStorage.setItem('currentUser',index)
+                   break;
+               }
+           }
+           if(found = true){
+            window.location.href = "Todo.html"
+           }else{
+               error.innerHTML = '<h5 class="text-danger"> Incorrect Details </h5>'
+
+               setTimeout(() => {
+                   error.innerHTML = ""
+               }, 2000);
+           }
+
+       }
+
+       function back(){
+           var getConfirm = confirm("Are you sure you want to go back to the Sign Up page?")
+
+           if(getConfirm == true){
+               window.location = 'index.html'
+           }else{
+               alert("Just be careful")
+           }
+       }
+
+       function display(){
+          var userFn = JSON.parse(localStorage.getItem('usersInfo'))
+          var userCurrent = JSON.parse(localStorage.getItem('currentUser'))
+
+           setTimeout(() => {
+               disp.innerHTML = `<h4 class="my-3 text-primary">Welcome, this is your log in page</h4>`
+           }, 1000);
+
+           setTimeout(() => {
+               disp.innerHTML = ''
+           }, 4000);
+       }
+   </script>
+</body>
+</html>

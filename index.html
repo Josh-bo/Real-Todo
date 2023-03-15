@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="stylesheet" href="bootstrap-5.2.2-dist/css/bootstrap.css">
+</head>
+<body>
+   <div class="container-fluid">
+        <div class="text-center mt-5 row">
+            <div class="col-12 te border w-75 mx-auto pb-2 p-2">
+                <h1>TODO PRO MAX</h1>
+                <h2>SIGN IN</h2>
+
+                <div id="error"></div>
+
+                <div class="row">
+                       <div class="col-sm-12 col-md-6 col-lg-6">
+                           <input type="text" placeholder=" First Name" id="fn" class="form-control my-2">
+                       </div> 
+                       
+                       <div class="col-sm-12 col-md-6 col-lg-6">
+                           <input type="text" placeholder=" Last Name" id="ln" class="form-control my-2">
+                       </div>
+                       
+                       <div>
+                        <input type="text" placeholder=" E-mail" id="em" class="form-control my-2">
+                        <input type="password" placeholder=" Password" id="ps" class="form-control my-2">
+                       </div>
+                       
+    
+                </div>
+
+                <button class="btn btn-primary my-3" onclick="signUp()">SIGN UP</button>
+
+                
+                <div>
+                    <input type="checkbox" onclick="log()"> I have an Account here, <br> I have already created one</input>
+                </div>
+            </div>
+        </div>
+   </div>
+
+   <script>
+       var userDetails = []
+    
+       if(localStorage.usersInfo){
+           var oldDatas = JSON.parse(localStorage.getItem('usersInfo'))
+           userDetails = oldDatas
+       }
+       console.log(userDetails)
+
+       function signUp(){
+           if(fn.value == "" || ln.value == "" || em.value == "" || ps.value == ""){
+               error.innerHTML = `<h5>Please, fill in the forms correctly<h5>`
+                error.style.color = 'red'
+
+           }else{
+           var eachDetails = {
+               firstname : fn.value,
+                lastname : ln.value,
+                email : em.value,
+                password : ps.value,
+                allTodo : []
+           }
+               
+           userDetails.push(eachDetails)
+           localStorage.setItem('usersInfo', JSON.stringify(userDetails))
+           console.log(userDetails)
+           window.location = 'signIn.html'
+        }
+       }
+
+       
+       function log(){
+         setTimeout(() => {
+            window.location = 'signIn.html'
+         }, 1000);
+        
+       }
+   </script>
+</body>
+</html>

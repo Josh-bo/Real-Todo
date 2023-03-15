@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap-5.2.2-dist/css/bootstrap.css">
+</head>
+<body onload="display()">
+    <div class="row">
+        <div class="col-12 mx-auto w-50 mt-5 border p-2 text-center">
+            <div id="disp"></div>
+            <h3>ADD TODO</h3>
+            <div id="error"></div>
+            <input type="text" class="form-control my-2" placeholder="Category  (Food,fruits...)" id="cat">
+            <input type="text" class="form-control my-2" placeholder="Title (Name of the Todo)" id="title">
+            <input type="time" class="form-control my-2" id="time">
+
+            <button class="btn btn-success my-2" onclick="add()">ADD LIST</button>
+            <button class="btn btn-warning my-2" onclick="view(), add()">GO TO LIST</button>
+        </div>
+    </div>
+
+    <script>
+ 
+
+        var emptyObject = []
+        var currentUserIndex = localStorage.getItem('currentUser')
+         
+        if(localStorage.usersInfo){
+            var oldObjects = JSON.parse(localStorage.getItem('usersInfo'))
+            emptyObject = oldObjects
+        }
+
+        function add(){
+            if(cat.value == '' || title == '' || time.value == ''){
+                error.innerHTML = `<h5 class="text-danger">Please, fill in the form correctly</h5>`
+
+                setTimeout(() => {
+                    error.innerHTML = ""
+                }, 3000);
+            }else{
+            var allObject = {
+                usersCategory : cat.value,
+                usersTitle : title.value,
+                usersTime : time.value,
+            }
+            
+            emptyObject[currentUserIndex].allTodo.push(allObject)
+
+            localStorage.setItem('usersInfo', JSON.stringify(emptyObject))
+            console.log(emptyObject)
+            
+            cat.value = ""
+            title.value = ""
+            time.value = ""
+        }
+        }
+
+        function view(){
+            window.location = 'dashboard.html'
+        }
+
+        function display(){
+          var userFn = JSON.parse(localStorage.getItem('usersInfo'))
+          var userCurrent = JSON.parse(localStorage.getItem('currentUser'))
+
+           setTimeout(() => {
+               disp.innerHTML = `<h5 style="font-size: 15px" class="my-3 text-primary">Welcome, ${userFn[userCurrent].firstname},  Kindly add your TODO here</h5>`
+           }, 1000);
+
+           setTimeout(() => {
+               disp.innerHTML = ''
+           }, 4000);
+       }
+    </script>
+</body>
+</html> 

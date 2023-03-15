@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="bootstrap-5.2.2-dist/css/bootstrap.css">
+</head>
+<body>
+    <style>
+        th{
+            background-color: red !important;
+            color: white !important;
+        }
+        .con{
+            gap: 60vw;
+        }
+    </style>
+    <div>
+        <table border="1" class="table table-striped " id="output">
+            <tr>
+                <th>S/N</th>
+                <th>CATEGORIES</th>
+                <th>TITLE</th>
+                <th>TIME</th>   
+                <th>ACTION</th>
+            </tr>
+
+           
+        </table>
+        <div id="diss"></div>
+    </div>
+
+    <div class="text-end me-3">
+        <button class="btn btn-danger" onclick="out()">LOG OUT</button><br>
+        <button class="btn btn-dark my-2" onclick="back()">BACK TO TODO</button>
+    </div>
+  </div>
+     
+    <script> 
+    
+    var user = JSON.parse(localStorage.getItem('usersInfo'))
+    var userIndex = localStorage.getItem('currentUser')
+    var userData = user[userIndex].allTodo 
+    // console.log(userData)
+    
+        displayAll()
+
+
+       function displayAll(){
+         output.innerHTML = ''
+         output.innerHTML = `
+         <tr>
+                <th>S/N</th>
+                <th>CATEGORIES</th>
+                <th>TITLE</th>
+                <th>TIME</th>   
+                <th>ACTION</th>
+            </tr>
+         `
+        for (let index = 0; index < userData.length; index++) {
+            output.innerHTML += `
+            <tr>
+                <td>${index+1}</td>
+                <td>${userData[index].usersCategory}</td>
+                <td>${userData[index].usersTitle}</td>
+                <td>${userData[index].usersTime}</td>
+                <td>
+                    <button class="btn btn-danger" onclick="del(${index})">DELETE</button>
+                </td>
+            </tr>
+            `
+        }
+
+       }
+        function back(){
+            window.location = 'Todo.html'
+        }
+        
+        function del(putout){
+            let getConfirm = confirm("Are you sure you want to delete this list? ")
+
+            if(getConfirm == true){
+                user[userIndex].allTodo.splice(putout,1)
+                
+                // console.log(userData)
+                localStorage.setItem('usersInfo', JSON.stringify(user))
+                
+                displayAll()
+            }else{
+                alert("Just be careful") 
+            }
+
+            // alert("Sorry, This action is not ready !!!")
+        }
+
+        function out(){
+            var getConfirm = confirm('Are you sure you want to logout ?')
+
+            if(getConfirm == true){
+                window.location = 'signIn.html'
+            }else{
+                alert('You better be careful')
+            }
+        }
+    </script>
+</body>
+</html>
